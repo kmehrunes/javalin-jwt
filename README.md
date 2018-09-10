@@ -25,7 +25,7 @@ class MockUser {
 }
 ```
 
-### Creating a JWT provider
+### Creating a JWT Provider
 In order to use any functionality available here, you need first to create a JWT provider (for lack of a better word). A provider is a somewhat convient way of working with JWT which wraps a generator and a verifier. You need a generator which implements the functional interfaceJWTGeneratr, and a verifier which is the normal Auth0 JWTVerifier. Additionally, both of them require an Auth0 Algorithm to work on. For the sake of example, we are going to use HMAC256.
 
 To create an HMAC256 instance you can use the snippet below, with your own secret of coure:
@@ -56,3 +56,79 @@ Finally a provider is created using the algorithm, the generator, and the verifi
 ```java
 JWTProvider provider = JWTProvider(algorithm, generator, verifier);
 ```
+
+### Using the Provider in Handlers
+Now that the provider is ready, we can go ahead and use it in a Javalin handler. Here we will have two handler: one to generate the toke and one to verify it. In the generate handler we send a JWT as a JSON { "jwt": String }. This is just an example, you can add whatever you want like a renewal token etc.
+
+```java
+app.get("/generate",  context -> {
+      // a mock user as an examples
+      MockUser mockUser = new MockUser("Mocky McMockface", "admin");
+
+      // generate a token for the user
+      String token = provider.generateToken(mockUser);
+
+      // send the JWT response
+      context.json(new JWTResponse(token));
+});
+
+app.get("/validate", context -> {
+      Optional<DecodedJWT> decodedJWT = JavalinJWT.getTokenFromHeader(context)
+                                                    .flatMap(provider::validateToken);
+
+      if (!decodedJWT.isPresent()) {
+          context.status(401).result("Missing or invalid token");
+      }
+      else {
+          context.result("Hi " + decodedJWT.get().getClaim("name").asString());
+      }
+});
+```
+
+Now if you visit /generate, you'll get a JWT for the created user. Then you need to put that token in an authorization header with "Bearer" scheme and issue a request to /validate.
+
+### Using a Decode Handler and an Access Manager
+What we did for /validate in the previous example needs to be done in every handler we have. This is why we have decode handlers and access managers. A decode handler takes care of the first part (extracting, decoding, and validating a JWT) while an access manager takes care of the second part (handling authorization).
+
+#### Decode Handler
+There are two decode handler: one for reading the token from an authorization and one to read the token from a cookie. Pick whichever you like. A decode handler is simply created using a helper function as follows:
+```java
+Handler decodeHandler = JavalinJWT.createHeaderDecodeHandler(provider);
+```
+And should be added as a *before* handler, whether globally or to certain paths. In this example we set it globally:
+```java
+app.before(decodeHandler);
+```
+
+### Access Manager
+An access manager requires the name of a JWT claim which declares the user's level, a mapping between users' levels and roles, and a default role for when no token is available. For the sake of this example, here are the available roles and their mapping:
+```java
+enum Roles implements Role {
+    ANYONE,
+    USER,
+    ADMIN
+}
+
+Map<String, Role> rolesMapping = new HashMap<String, Role>() {{
+    put("user", Roles.USER);
+    put("admin", Roles.ADMIN);
+}};
+```
+Creating an access manager is a simple one-line:
+```java
+JWTAccessManager accessManager = new JWTAccessManager("level", rolesMapping, Roles.ANYONE);
+```
+And can be added directly to the app:
+```java
+app.accessManager(accessManager);
+```
+Notice that the user's level claim must match what was specified in the generator.
+
+Finally, now you can protect the paths using roles:
+```java
+app.get("/generate",  generateHandler, Collections.singleton(Roles.ANYONE));
+app.get("/validate", validateHandler, new HashSet<>(Arrays.asList(Roles.USER, Roles.ADMIN)));
+app.get("/adminslounge", validateHandler, Collections.singleton(Roles.ADMIN));
+```
+
+You no longer need to do user authorization in the handlers. To highlight that, the example shows that both /validate and /adminlounge have the same handler but different access roles.
