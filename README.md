@@ -141,9 +141,9 @@ Handler validateHandler = context -> {
 
 Finally, now you can protect the paths using roles:
 ```java
-app.get("/generate",  generateHandler, Collections.singleton(Roles.ANYONE));
-app.get("/validate", validateHandler, new HashSet<>(Arrays.asList(Roles.USER, Roles.ADMIN)));
-app.get("/adminslounge", validateHandler, Collections.singleton(Roles.ADMIN));
+app.get("/generate",  generateHandler, roles(Roles.ANYONE));
+app.get("/validate", validateHandler, roles(Roles.USER, Roles.ADMIN));
+app.get("/adminslounge", validateHandler, roles(Roles.ADMIN));
 ```
 
 Although generateHandler remains unchanged (except for changing the level to user instead of admin) from the previous example, validateHandler is now more concise and focused. You no longer need to do user authorization in the handlers. To highlight that, the example shows that both /validate and /adminlounge have the same handler but different access roles.
