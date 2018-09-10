@@ -48,15 +48,8 @@ public class AdvancedExample {
         };
 
         Handler validateHandler = context -> {
-            Optional<DecodedJWT> decodedJWT = JavalinJWT.getTokenFromHeader(context)
-                    .flatMap(provider::validateToken);
-
-            if (!decodedJWT.isPresent()) {
-                context.status(401);
-            }
-            else {
-                context.result("Hi " + decodedJWT.get().getClaim("name").asString());
-            }
+            DecodedJWT decodedJWT = JavalinJWT.getDecodedFromContext(context);
+            context.result("Hi " + decodedJWT.getClaim("name").asString());
         };
 
         // set the paths
