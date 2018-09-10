@@ -1,4 +1,4 @@
-package javalinjwt;
+package javalinjwt.examples;
 
 public class JWTResponse {
     public String jwt;
