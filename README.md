@@ -100,7 +100,7 @@ And should be added as a *before* handler, whether globally or to certain paths.
 app.before(decodeHandler);
 ```
 
-### Access Manager
+#### Access Manager
 An access manager requires the name of a JWT claim which declares the user's level, a mapping between users' levels and roles, and a default role for when no token is available. For the sake of this example, here are the available roles and their mapping:
 ```java
 enum Roles implements Role {
@@ -124,6 +124,21 @@ app.accessManager(accessManager);
 ```
 Notice that the user's level claim must match what was specified in the generator.
 
+#### Putting it to Work
+Now that we have the decode handler and the access manager all set up, we can got ahead and put them to good use. We will first define the handlers:
+```java
+Handler generateHandler = context -> {
+    MockUser mockUser = new MockUser("Mocky McMockface", "user");
+    String token = provider.generateToken(mockUser);
+    context.json(new JWTResponse(token));
+};
+
+Handler validateHandler = context -> {
+    DecodedJWT decodedJWT = JavalinJWT.getDecodedFromContext(context);
+    context.result("Hi " + decodedJWT.getClaim("name").asString());
+};
+```
+
 Finally, now you can protect the paths using roles:
 ```java
 app.get("/generate",  generateHandler, Collections.singleton(Roles.ANYONE));
@@ -131,4 +146,4 @@ app.get("/validate", validateHandler, new HashSet<>(Arrays.asList(Roles.USER, Ro
 app.get("/adminslounge", validateHandler, Collections.singleton(Roles.ADMIN));
 ```
 
-You no longer need to do user authorization in the handlers. To highlight that, the example shows that both /validate and /adminlounge have the same handler but different access roles.
+Although generateHandler remains unchanged (except for changing the level to user instead of admin) from the previous example, validateHandler is now more concise and focused. You no longer need to do user authorization in the handlers. To highlight that, the example shows that both /validate and /adminlounge have the same handler but different access roles.
