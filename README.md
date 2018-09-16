@@ -8,19 +8,25 @@
 ## Dependency
 ```xml
 <repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
+ 	<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
 </repositories>
 
 <dependencies>
 	<dependency>
-	    <groupId>com.github.kmehrunes</groupId>
-	    <artifactId>javalin-jwt</artifactId>
-	    <version>v0.1-alpha</version>
+		<groupId>io.javalin</groupId>
+		<artifactId>javalin</artifactId>
+		<version>...</version>
 	</dependency>
-<dependencies>
+
+	<dependency>
+		<groupId>com.github.kmehrunes</groupId>
+		<artifactId>javalin-jwt</artifactId>
+		<version>v0.1-alpha</version>
+	</dependency>
+</dependencies>
 ```
 
 ## Features
@@ -74,7 +80,7 @@ FYI, Auth0 JWT provides a lot of options for creating a verifier, check the docu
 
 Finally a provider is created using the algorithm, the generator, and the verifier:
 ```java
-JWTProvider provider = JWTProvider(algorithm, generator, verifier);
+JWTProvider provider = new JWTProvider(algorithm, generator, verifier);
 ```
 
 ### Using the Provider in Handlers
