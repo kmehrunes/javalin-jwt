@@ -1,7 +1,27 @@
 # JavalinJWT
 ### A basic JWT extension for Javalin which uses Auth0 Java JWT library available [here](https://github.com/auth0/java-jwt)
 
+[![](https://jitpack.io/v/kmehrunes/javalin-jwt.svg)](https://jitpack.io/#kmehrunes/javalin-jwt)
+
 **It's probably a good idea to familiarize yourself with Auth0 library first before using this extension**
+
+## Dependency
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+	<dependency>
+	    <groupId>com.github.kmehrunes</groupId>
+	    <artifactId>javalin-jwt</artifactId>
+	    <version>v0.1-alpha</version>
+	</dependency>
+<dependencies>
+```
 
 ## Features
 - Helper functions for Javalin Context to make working with JWTs easier, includes: extracting tokens from authorization headers, adding/getting tokens to/from cookies, and adding decoded JWT objects to contexts for future handlers to use
