@@ -22,9 +22,9 @@
 	</dependency>
 
 	<dependency>
-		<groupId>com.github.kmehrunes</groupId>
-		<artifactId>javalin-jwt</artifactId>
-		<version>v0.1-alpha</version>
+	    <groupId>com.github.kmehrunes</groupId>
+	    <artifactId>javalin-jwt</artifactId>
+	    <version>v0.1</version>
 	</dependency>
 </dependencies>
 ```
