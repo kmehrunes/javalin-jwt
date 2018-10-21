@@ -59,7 +59,7 @@ To create an HMAC256 instance you can use the snippet below, with your own secre
 Algorithm algorithm = Algorithm.HMAC256("very_secret");
 ```
 
-A JWT generator needs to implement the function *generate()*. It takes an object of a generic type and generates the user 
+A JWT generator needs to implement the function `generate()`. It takes an object of a generic type and generates the user 
 claims based on it, and an algorithm to sign the token:
 ```java
 JWTGenerator<MockUser> generator = (user, alg) -> {
@@ -111,10 +111,10 @@ app.get("/validate", context -> {
 });
 ```
 
-Now if you visit /generate, you'll get a JWT for the created user. Then you need to put that token in an authorization header with "Bearer" scheme and issue a request to /validate.
+Now if you visit `/generate`, you'll get a JWT for the created user. Then you need to put that token in an authorization header with "Bearer" scheme and issue a request to `/validate`.
 
 ### Using a Decode Handler and an Access Manager
-What we did for /validate in the previous example needs to be done in every handler we have. This is why we have decode handlers and access managers. A decode handler takes care of the first part (extracting, decoding, and validating a JWT) while an access manager takes care of the second part (handling authorization).
+What we did for `/validate` in the previous example needs to be done in every handler we have. This is why we have decode handlers and access managers. A decode handler takes care of the first part (extracting, decoding, and validating a JWT) while an access manager takes care of the second part (handling authorization).
 
 #### Decode Handler
 There are two decode handler: one for reading the token from an authorization and one to read the token from a cookie. Pick whichever you like. A decode handler is simply created using a helper function as follows:
@@ -172,4 +172,4 @@ app.get("/validate", validateHandler, roles(Roles.USER, Roles.ADMIN));
 app.get("/adminslounge", validateHandler, roles(Roles.ADMIN));
 ```
 
-Although generateHandler remains unchanged (except for changing the level to user instead of admin) from the previous example, validateHandler is now more concise and focused. You no longer need to do user authorization in the handlers. To highlight that, the example shows that both /validate and /adminlounge have the same handler but different access roles.
+Although `generateHandler` remains unchanged (except for changing the level to *user* instead of *admin*) from the previous example, `validateHandler` is now more concise and focused. You no longer need to do user authorization in the handlers. To highlight that, the example shows that both `/validate` and `/adminlounge` have the same handler but different access roles.
