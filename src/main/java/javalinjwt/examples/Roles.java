@@ -1,6 +1,8 @@
 package javalinjwt.examples;
 
-import io.javalin.security.Role;
+import io.javalin.core.security.Role;
+
+
 
 enum Roles implements Role {
     ANYONE,
