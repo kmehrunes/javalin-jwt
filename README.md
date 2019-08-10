@@ -24,7 +24,7 @@
 	<dependency>
 	    <groupId>com.github.kmehrunes</groupId>
 	    <artifactId>javalin-jwt</artifactId>
-	    <version>v0.1</version>
+	    <version>v0.2</version>
 	</dependency>
 </dependencies>
 ```
