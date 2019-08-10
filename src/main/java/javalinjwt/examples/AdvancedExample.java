@@ -1,9 +1,11 @@
 package javalinjwt.examples;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.javalin.Handler;
+
 import io.javalin.Javalin;
-import io.javalin.security.Role;
+import io.javalin.core.security.Role;
+import io.javalin.http.Handler;
+
 import javalinjwt.*;
 
 import java.util.*;
@@ -24,10 +26,9 @@ public class AdvancedExample {
 
         // create the app
         Javalin app = Javalin.create()
-                .port(4000)
-                .accessManager(accessManager) // THE ACCESS MANAGER IS SET HERE
-                .start();
-
+              //.config().(accessManager) // THE ACCESS MANAGER IS SET HERE
+                .start(4000);
+        app.config.accessManager(accessManager);
         /*
          * A decode handler which captures the value of a JWT from an
          * authorization header in the form of "Bearer {jwt}". The handler

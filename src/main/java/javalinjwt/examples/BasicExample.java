@@ -13,8 +13,8 @@ public class BasicExample {
 
         // create the app
         Javalin app = Javalin.create()
-                .port(4000)
-                .start();
+             //   .port(4000)
+                .start(4000);
 
         app.get("/generate",  context -> {
             // a mock user as an examples
