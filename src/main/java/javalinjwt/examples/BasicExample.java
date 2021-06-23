@@ -9,7 +9,7 @@ import java.util.Optional;
 public class BasicExample {
     public static void main(String[] args) {
         // create the provider
-        JWTProvider provider = ProviderExample.createHMAC512();
+        JWTProvider<MockUser> provider = ProviderExample.createHMAC512();
 
         // create the app
         Javalin app = Javalin.create()

@@ -14,7 +14,7 @@ public class AdvancedExample {
 
     public static void main(String[] args) {
         // create the provider
-        JWTProvider provider = ProviderExample.createHMAC512();
+        JWTProvider<MockUser> provider = ProviderExample.createHMAC512();
 
         // create the access manager
         Map<String, Role> rolesMapping = new HashMap<String, Role>() {{
