@@ -8,7 +8,7 @@ import javalinjwt.JWTProvider;
 import javalinjwt.JWTGenerator;
 
 class ProviderExample {
-    static JWTProvider createHMAC512() {
+    static JWTProvider<MockUser> createHMAC512() {
         JWTGenerator<MockUser> generator = (user, alg) -> {
             JWTCreator.Builder token = JWT.create()
                     .withClaim("name", user.name)
@@ -19,6 +19,6 @@ class ProviderExample {
         Algorithm algorithm = Algorithm.HMAC256("very_secret");
         JWTVerifier verifier = JWT.require(algorithm).build();
 
-        return new JWTProvider(algorithm, generator, verifier);
+        return new JWTProvider<>(algorithm, generator, verifier);
     }
 }

@@ -7,18 +7,18 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 import java.util.Optional;
 
-public class JWTProvider {
+public class JWTProvider<T> {
     private final Algorithm algorithm;
-    private final JWTGenerator generator;
+    private final JWTGenerator<T> generator;
     private final JWTVerifier verifier;
 
-    public JWTProvider(Algorithm algorithm, JWTGenerator generator, JWTVerifier verifier) {
+    public JWTProvider(Algorithm algorithm, JWTGenerator<T> generator, JWTVerifier verifier) {
         this.algorithm = algorithm;
         this.generator = generator;
         this.verifier = verifier;
     }
 
-    public String generateToken(Object obj) {
+    public String generateToken(T obj) {
         return generator.generate(obj, algorithm);
     }
 

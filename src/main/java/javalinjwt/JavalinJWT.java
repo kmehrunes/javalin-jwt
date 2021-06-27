@@ -6,7 +6,6 @@ import io.javalin.http.Handler;
 import io.javalin.http.InternalServerErrorResponse;
 
 
-
 import java.util.Optional;
 
 public class JavalinJWT {
@@ -27,7 +26,7 @@ public class JavalinJWT {
     public static DecodedJWT getDecodedFromContext(Context context) {
         Object attribute = context.attribute(CONTEXT_ATTRIBUTE);
 
-        if (!DecodedJWT.class.isInstance(attribute)) {
+        if (!(attribute instanceof DecodedJWT)) {
             throw new InternalServerErrorResponse("The context carried invalid object as JavalinJWT");
         }
 
@@ -54,13 +53,13 @@ public class JavalinJWT {
         return context.cookie(COOKIE_KEY, token);
     }
 
-    public static Handler createHeaderDecodeHandler(JWTProvider jwtProvider) {
+    public static <T> Handler createHeaderDecodeHandler(JWTProvider<T> jwtProvider) {
         return context -> getTokenFromHeader(context)
                 .flatMap(jwtProvider::validateToken)
                 .ifPresent(jwt -> JavalinJWT.addDecodedToContext(context, jwt));
     }
 
-    public static Handler createCookieDecodeHandler(JWTProvider jwtProvider) {
+    public static <T> Handler createCookieDecodeHandler(JWTProvider<T> jwtProvider) {
         return context -> getTokenFromCookie(context)
                 .flatMap(jwtProvider::validateToken)
                 .ifPresent(jwt -> JavalinJWT.addDecodedToContext(context, jwt));
