@@ -6,7 +6,7 @@
 
     <groupId>com.github.kmehrunes</groupId>
     <artifactId>javalin-jwt</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>
