@@ -54,6 +54,14 @@
             <artifactId>java-jwt</artifactId>
             <version>3.18.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>22.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
