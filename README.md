@@ -28,6 +28,7 @@
 	</dependency>
 </dependencies>
 ```
+Require the java module with: `require com.github.kmehrunes.javalinjwt;`
 
 ## Features
 - Helper functions for Javalin Context to make working with JWTs easier, includes: extracting tokens from authorization headers, adding/getting tokens to/from cookies, and adding decoded JWT objects to contexts for future handlers to use
