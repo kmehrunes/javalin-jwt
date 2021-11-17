@@ -3,7 +3,7 @@ package javalinjwt.examples;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import io.javalin.Javalin;
-import io.javalin.core.security.Role;
+import io.javalin.core.security.RouteRole;
 import io.javalin.http.Handler;
 
 import javalinjwt.*;
@@ -17,7 +17,7 @@ public class AdvancedExample {
         JWTProvider<MockUser> provider = ProviderExample.createHMAC512();
 
         // create the access manager
-        Map<String, Role> rolesMapping = new HashMap<String, Role>() {{
+        Map<String, RouteRole> rolesMapping = new HashMap<>() {{
             put("user", Roles.USER);
             put("admin", Roles.ADMIN);
         }};
@@ -25,10 +25,10 @@ public class AdvancedExample {
         JWTAccessManager accessManager = new JWTAccessManager("level", rolesMapping, Roles.ANYONE);
 
         // create the app
-        Javalin app = Javalin.create()
+        Javalin app = Javalin.create(config -> config.accessManager(accessManager))
               //.config().(accessManager) // THE ACCESS MANAGER IS SET HERE
                 .start(4000);
-        app.config.accessManager(accessManager);
+
         /*
          * A decode handler which captures the value of a JWT from an
          * authorization header in the form of "Bearer {jwt}". The handler
@@ -56,8 +56,8 @@ public class AdvancedExample {
         // set the paths
         app.before(decodeHandler);
 
-        app.get("/generate",  generateHandler, Collections.singleton(Roles.ANYONE));
-        app.get("/validate", validateHandler, new HashSet<>(Arrays.asList(Roles.USER, Roles.ADMIN)));
-        app.get("/adminslounge", validateHandler, Collections.singleton(Roles.ADMIN));
+        app.get("/generate",  generateHandler, Roles.ANYONE);
+        app.get("/validate", validateHandler, Roles.USER, Roles.ADMIN);
+        app.get("/adminslounge", validateHandler, Roles.ADMIN);
     }
 }
