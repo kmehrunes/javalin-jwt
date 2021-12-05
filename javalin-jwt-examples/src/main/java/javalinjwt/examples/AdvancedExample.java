@@ -26,7 +26,6 @@ public class AdvancedExample {
 
         // create the app
         Javalin app = Javalin.create(config -> config.accessManager(accessManager))
-              //.config().(accessManager) // THE ACCESS MANAGER IS SET HERE
                 .start(4000);
 
         /*
