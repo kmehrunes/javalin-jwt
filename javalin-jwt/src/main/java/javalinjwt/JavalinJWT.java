@@ -1,10 +1,9 @@
 package javalinjwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import io.javalin.http.Context;
 import io.javalin.http.InternalServerErrorResponse;
-
 
 import java.util.Optional;
 
