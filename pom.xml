@@ -7,7 +7,7 @@
     <groupId>com.github.kmehrunes</groupId>
     <artifactId>javalin-jwt-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.5</version>
+    <version>0.6</version>
 
     <modules>
         <module>javalin-jwt</module>
