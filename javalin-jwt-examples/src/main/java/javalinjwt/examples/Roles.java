@@ -1,7 +1,7 @@
 package javalinjwt.examples;
 
 
-import io.javalin.core.security.RouteRole;
+import io.javalin.security.RouteRole;
 
 enum Roles implements RouteRole {
     ANYONE,
