@@ -1,10 +1,10 @@
 package javalinjwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.javalin.core.security.AccessManager;
-import io.javalin.core.security.RouteRole;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import io.javalin.security.AccessManager;
+import io.javalin.security.RouteRole;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -35,7 +35,7 @@ public class JWTAccessManager implements AccessManager {
     }
 
     @Override
-    public void manage(@NotNull Handler handler, @NotNull Context context, Set<RouteRole> permittedRoles) throws Exception {
+    public void manage(@NotNull Handler handler, @NotNull Context context, Set<? extends RouteRole> permittedRoles) throws Exception {
         RouteRole role = extractRole(context);
 
         if (permittedRoles.contains(role)) {

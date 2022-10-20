@@ -3,8 +3,8 @@ package javalinjwt.examples;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import io.javalin.Javalin;
-import io.javalin.core.security.RouteRole;
 import io.javalin.http.Handler;
+import io.javalin.security.RouteRole;
 
 import javalinjwt.*;
 
