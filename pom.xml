@@ -27,6 +27,14 @@
         </developer>
     </developers>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub AuthGuard Maven Packages</name>
+            <url>https://maven.pkg.github.com/kmehrunes/javalin-jwt</url>
+        </repository>
+    </distributionManagement>
+
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>

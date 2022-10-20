@@ -1,11 +1,35 @@
 # JavalinJWT
 ### A basic JWT extension for Javalin which uses Auth0 Java JWT library available [here](https://github.com/auth0/java-jwt)
 
-[![](https://jitpack.io/v/kmehrunes/javalin-jwt.svg)](https://jitpack.io/#kmehrunes/javalin-jwt)
-
-**It's probably a good idea to familiarize yourself with Auth0 library first before using this extension**
+**It's a good idea to familiarize yourself with Auth0 library first before using this extension**
 
 ## Dependency
+### 0.7.0+
+For versions 0.7.0+, use GitHub Packages repository
+
+```xml
+<repositories>
+    <repository>
+        <id>github-pacakges-javalin-jwt</id>
+        <name>javalin-jwt packages</name>
+        <url>https://maven.pkg.github.com/kmehrunes/javalin-jwt</url>
+    </repository>
+</repositories>
+```
+
+And then add the dependency
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.github.kmehrunes</groupId>
+        <artifactId>javalin-jwt</artifactId>
+        <version>[version]</version>
+    </dependency>
+</dependencies>
+```
+
+### Versions older than 0.7.0
+Add the JitPack repository
 ```xml
 <repositories>
  	<repository>
@@ -13,14 +37,11 @@
 		<url>https://jitpack.io</url>
 	</repository>
 </repositories>
+```
 
+And then add the dependency
+```xml
 <dependencies>
-	<dependency>
-		<groupId>io.javalin</groupId>
-		<artifactId>javalin</artifactId>
-		<version>...</version>
-	</dependency>
-
 	<dependency>
 	    <groupId>com.github.kmehrunes</groupId>
 	    <artifactId>javalin-jwt</artifactId>
