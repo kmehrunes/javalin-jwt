@@ -1,12 +1,31 @@
 # JavalinJWT
 ### A basic JWT extension for Javalin which uses Auth0 Java JWT library available [here](https://github.com/auth0/java-jwt)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.kmehrunes/javalin-jwt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.kmehrunes/javalin-jwt)
 [![](https://jitpack.io/v/kmehrunes/javalin-jwt.svg)](https://jitpack.io/#kmehrunes/javalin-jwt)
 
 **It's a good idea to familiarize yourself with Auth0 library first before using this extension**
 
-## Dependecy
-Add the JitPack repository
+## Dependency
+### Version 7.0+
+Starting from version 7.0, you can get the library from a Central Maven repository
+
+* **Maven**
+```xml
+<dependency>
+    <groupId>com.github.kmehrunes</groupId>
+    <artifactId>javalin-jwt</artifactId>
+    <version>[version]</version>
+</dependency>
+```
+
+* **Gradle**
+```groovy
+implementation 'com.github.kmehrunes:javalin-jwt:[version]'
+```
+
+### Anything before 7.0
+To get any of the older version, you need to add the JitPack repository as well
 ```xml
 <repositories>
  	<repository>
@@ -16,16 +35,6 @@ Add the JitPack repository
 </repositories>
 ```
 
-And then add the dependency
-```xml
-<dependencies>
-	<dependency>
-	    <groupId>com.github.kmehrunes</groupId>
-	    <artifactId>javalin-jwt</artifactId>
-	    <version>[version]</version>
-	</dependency>
-</dependencies>
-```
 Require the java module with: `require com.github.kmehrunes.javalinjwt;`
 
 For Gradle, and other build systems, check https://jitpack.io/#kmehrunes/javalin-jwt/
