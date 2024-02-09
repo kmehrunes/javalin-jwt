@@ -25,8 +25,10 @@ public class AdvancedExample {
         JWTAccessManager accessManager = new JWTAccessManager("level", rolesMapping, Roles.ANYONE);
 
         // create the app
-        Javalin app = Javalin.create(config -> config.accessManager(accessManager))
-                .start(4000);
+        Javalin app = Javalin.create().start(4000);
+
+        // set the access manager
+        app.beforeMatched(accessManager);
 
         /*
          * A decode handler which captures the value of a JWT from an
