@@ -3,16 +3,15 @@ package javalinjwt;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import io.javalin.security.AccessManager;
+import io.javalin.http.UnauthorizedResponse;
 import io.javalin.security.RouteRole;
 import org.jetbrains.annotations.NotNull;
-
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class JWTAccessManager implements AccessManager {
+public class JWTAccessManager implements Handler {
     private final String userRoleClaim;
     private final Map<String, RouteRole> rolesMapping;
     private final RouteRole defaultRole;
@@ -35,13 +34,11 @@ public class JWTAccessManager implements AccessManager {
     }
 
     @Override
-    public void manage(@NotNull Handler handler, @NotNull Context context, Set<? extends RouteRole> permittedRoles) throws Exception {
+    public void handle(@NotNull Context context) {
         RouteRole role = extractRole(context);
-
-        if (permittedRoles.contains(role)) {
-            handler.handle(context);
-        } else {
-            context.status(401).result("Unauthorized");
+        Set<RouteRole> permittedRoles = context.routeRoles();
+        if (!permittedRoles.contains(role)) {
+            throw new UnauthorizedResponse();
         }
     }
 }
