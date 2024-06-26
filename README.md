@@ -156,7 +156,7 @@ JWTAccessManager accessManager = new JWTAccessManager("level", rolesMapping, Rol
 ```
 And can be added directly to the app:
 ```java
-app.accessManager(accessManager);
+app.beforeMatched(accessManager);
 ```
 Notice that the user's level claim must match what was specified in the generator.
 
